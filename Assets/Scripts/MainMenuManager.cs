@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private Slider _volume;
     [SerializeField] private Slider _textColor;
-    [SerializeField] private AudioSource _authorsSound;
-    [SerializeField] private AudioSource _gameSound;
     [SerializeField] private GameObject _settingsWindow;
     [SerializeField] private GameObject _buttonsParent;
+
+    private Color _startColor = new Color(0, 0, 0, 1);
+    private Color _endColor = new Color(0.5f, 1, 0.5f, 1);
 
     private void Start()
     {
         CloseSettings();
-
-        _gameSound.Play();
     }
 
     public void StartGame()
@@ -44,13 +42,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetTextColor(float value)
     {
-        SettingsSaver.TextColor = value;
-    }
-
-    public void OpenAboutAuthorsWindow()
-    {
-        _gameSound.Stop();
-        _authorsSound.Play();
+        SettingsSaver.TextColor = Color.Lerp(_startColor, _endColor, value);
     }
 
     public void Exit()
